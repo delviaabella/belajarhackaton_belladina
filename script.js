@@ -1,60 +1,41 @@
 "use strict";
 
-const TARGET_POIN = 100;
-const dummyData = [
-    { nama: "Bawa Tumbler Sendiri", kategori: "Reduksi Plastik", poin: 10 },
-    { nama: "Matikan Lampu Kelas", kategori: "Hemat Energi", poin: 15 },
-    { nama: "Daur Ulang Kertas", kategori: "Daur Ulang", poin: 20 },
+// Shared action data used by the dashboard, report table, and category chart.
+let actionsData = [
+    { id: 1, nama: "Membawa Botol Tumbler Sendiri", kategori: "Reduksi Plastik", poin: 10 },
 ];
 
-let actionsData = [];
-let totalAksi = 1;
-let totalPoin = 10;
+let navLinks;
+let tabContents;
+let actionForm;
+let inputNama;
+let inputKategori;
+let inputPoin;
+let actionList;
+let errorMessage;
+let statTotalAksi;
+let statTotalPoin;
+let btnClearAll;
+let tableLaporanBody;
+let statPlastik;
+let barPlastik;
+let percentPlastik;
+let statEnergi;
+let barEnergi;
+let percentEnergi;
+let statDaur;
+let barDaur;
+let percentDaur;
 
-document.addEventListener("DOMContentLoaded", () => {
-    const actionForm = document.getElementById("action-form");
-    const inputNama = document.getElementById("input-nama");
-    const inputKategori = document.getElementById("input-kategori");
-    const inputPoin = document.getElementById("input-poin");
-    const actionList = document.getElementById("action-list");
-    const errorMessage = document.getElementById("error-message");
-    const reportTableBody = document.getElementById("report-table-body");
-    const categoryFilter = document.getElementById("report-category-filter");
-    const emptyState = document.getElementById("empty-state");
-    const clearAllButton = document.getElementById("btn-clear-all");
+// Render the action list and update the dashboard totals.
+function renderDashboardList() {
+    const fragment = document.createDocumentFragment();
+    const totalPoin = actionsData.reduce((sum, action) => sum + action.poin, 0);
 
-    // Load the starter row from HTML into the single source of truth.
-    function readInitialActions() {
-        actionsData = Array.from(actionList.querySelectorAll(".action-item"), (item) => ({
-            id: Number(item.dataset.actionId),
-            nama: item.dataset.nama,
-            kategori: item.dataset.kategori,
-            poin: Number(item.dataset.poin),
-            status: item.dataset.status || "Terverifikasi",
-        }));
-
-        if (actionsData.length) {
-            totalAksi = actionsData.length;
-            totalPoin = actionsData.reduce((sum, action) => sum + action.poin, 0);
-        }
-    }
-
-    // Display the current action totals and monthly target status.
-    function updateStats() {
-        totalAksi = actionsData.length;
-        totalPoin = actionsData.reduce((sum, action) => sum + action.poin, 0);
-        document.getElementById("stat-total-aksi").textContent = totalAksi;
-        document.getElementById("stat-total-poin").textContent = totalPoin;
-        document.getElementById("stat-target").textContent =
-            totalPoin >= TARGET_POIN ? "Tercapai" : "Aktif";
-    }
-
-    // Build a safely rendered action row for the dashboard list.
-    function createActionItem(action) {
+    actionsData.forEach((action) => {
         const item = document.createElement("li");
         item.className = "action-item";
         item.dataset.actionId = String(action.id);
-        item.dataset.poin = String(action.poin);
 
         const text = document.createElement("span");
         text.className = "item-text";
@@ -63,198 +44,162 @@ document.addEventListener("DOMContentLoaded", () => {
         const deleteButton = document.createElement("button");
         deleteButton.className = "btn-delete";
         deleteButton.type = "button";
-        deleteButton.dataset.deleteId = String(action.id);
-        deleteButton.setAttribute("aria-label", `Hapus aksi ${action.nama}`);
         deleteButton.textContent = "Hapus";
+        deleteButton.setAttribute("aria-label", `Hapus aksi ${action.nama}`);
+        deleteButton.addEventListener("click", () => deleteAction(action.id));
 
         item.append(text, deleteButton);
-        return item;
-    }
-
-    // Render the dashboard's recent-action list from actionsData.
-    function renderActionList() {
-        const fragment = document.createDocumentFragment();
-        actionsData.forEach((action) => fragment.appendChild(createActionItem(action)));
-        actionList.replaceChildren(fragment);
-
-        const isEmpty = actionsData.length === 0;
-        emptyState.hidden = !isEmpty;
-        document.getElementById("list-count").textContent = `${actionsData.length} aksi tercatat`;
-    }
-
-    // Create a table cell and assign its content as text, not markup.
-    function createTableCell(value) {
-        const cell = document.createElement("td");
-        cell.textContent = value;
-        return cell;
-    }
-
-    // Render filtered report rows, including their verification badges.
-    function renderReportTable() {
-        const selectedCategory = categoryFilter.value;
-        const filteredActions = actionsData.filter((action) =>
-            selectedCategory === "all" || action.kategori === selectedCategory
-        );
-        const fragment = document.createDocumentFragment();
-
-        filteredActions.forEach((action, index) => {
-            const row = document.createElement("tr");
-            row.append(
-                createTableCell(String(index + 1)),
-                createTableCell(action.nama),
-                createTableCell(action.kategori),
-                createTableCell(String(action.poin)),
-            );
-
-            const statusCell = document.createElement("td");
-            const badge = document.createElement("span");
-            badge.className = `status-badge${action.status === "Terverifikasi" ? "" : " status-pending"}`;
-            badge.textContent = action.status;
-            statusCell.appendChild(badge);
-            row.appendChild(statusCell);
-            fragment.appendChild(row);
-        });
-
-        reportTableBody.replaceChildren(fragment);
-        document.getElementById("report-empty-state").hidden = filteredActions.length > 0;
-        document.getElementById("report-count").textContent =
-            `Menampilkan ${filteredActions.length} dari ${actionsData.length} aksi`;
-    }
-
-    // Calculate each category's points and share, then update its progress bar.
-    function renderCategoryStats() {
-        const categories = [
-            { name: "Reduksi Plastik", key: "plastic" },
-            { name: "Hemat Energi", key: "energy" },
-            { name: "Daur Ulang", key: "recycle" },
-        ];
-        const allPoints = actionsData.reduce((sum, action) => sum + action.poin, 0);
-
-        categories.forEach(({ name, key }) => {
-            const points = actionsData
-                .filter((action) => action.kategori === name)
-                .reduce((sum, action) => sum + action.poin, 0);
-            const percent = allPoints ? Math.round((points / allPoints) * 100) : 0;
-            const progress = document.getElementById(`${key}-progress`);
-
-            document.getElementById(`${key}-points`).textContent = points;
-            document.getElementById(`${key}-percent`).textContent = `${percent}%`;
-            progress.style.width = `${percent}%`;
-            progress.parentElement.setAttribute("aria-valuenow", String(percent));
-        });
-
-        document.getElementById("statistics-summary").textContent =
-            `Total ${allPoints} poin kontribusi dari ${actionsData.length} aksi kampus.`;
-    }
-
-    // Refresh every view that depends on the shared action data.
-    function renderAllViews() {
-        updateStats();
-        renderActionList();
-        renderReportTable();
-        renderCategoryStats();
-    }
-
-    // Add three sample actions only when both the list and state are empty.
-    function initDummyData() {
-        if (actionsData.length || actionList.children.length) return;
-
-        actionsData = dummyData.map((action, index) => ({
-            ...action,
-            id: index + 1,
-            status: "Terverifikasi",
-        }));
-        renderAllViews();
-    }
-
-    // Add a new action after validating the form values.
-    function handleFormSubmit(event) {
-        event.preventDefault();
-
-        const nama = inputNama.value.trim();
-        const kategori = inputKategori.value;
-        const poin = Number(inputPoin.value);
-
-        if (!nama || !Number.isFinite(poin) || poin <= 0) {
-            errorMessage.textContent = "Harap isi semua kolom dengan nilai angka poin yang valid!";
-            return;
-        }
-
-        errorMessage.textContent = "";
-        actionsData.unshift({
-            id: Date.now(),
-            nama,
-            kategori,
-            poin,
-            status: "Menunggu Verifikasi",
-        });
-        actionForm.reset();
-        renderAllViews();
-        inputNama.focus();
-    }
-
-    // Remove an action from shared state so all tabs update together.
-    function deleteAction(id) {
-        actionsData = actionsData.filter((action) => action.id !== id);
-        renderAllViews();
-    }
-
-    // Clear all actions and immediately refresh every dashboard view.
-    function clearAllActions() {
-        actionsData = [];
-        renderAllViews();
-    }
-
-    // Switch visible SPA tab and keep the selected sidebar link in sync.
-    function showTab(tabName) {
-        const tabs = document.querySelectorAll(".tab-content");
-        const links = document.querySelectorAll(".nav-menu [data-tab]");
-        const target = document.getElementById(`${tabName}-tab`);
-
-        if (!target) return;
-
-        tabs.forEach((tab) => {
-            const isActive = tab === target;
-            tab.classList.toggle("active", isActive);
-            tab.hidden = !isActive;
-        });
-
-        links.forEach((link) => {
-            const isActive = link.dataset.tab === tabName;
-            link.classList.toggle("active", isActive);
-            if (isActive) {
-                link.setAttribute("aria-current", "page");
-            } else {
-                link.removeAttribute("aria-current");
-            }
-        });
-
-        document.getElementById("current-tab-title").textContent = {
-            dashboard: "Dashboard",
-            laporan: "Laporan Aksi",
-            statistik: "Statistik Kampus",
-        }[tabName];
-    }
-
-    document.querySelectorAll(".nav-menu [data-tab]").forEach((link) => {
-        link.addEventListener("click", (event) => {
-            event.preventDefault();
-            showTab(link.dataset.tab);
-        });
+        fragment.appendChild(item);
     });
 
-    document.querySelectorAll("[data-open-tab]").forEach((button) => {
-        button.addEventListener("click", () => showTab(button.dataset.openTab));
+    actionList.replaceChildren(fragment);
+    statTotalAksi.textContent = actionsData.length;
+    statTotalPoin.textContent = totalPoin;
+}
+
+// Render all action records in the report tab.
+function renderLaporanTable() {
+    const fragment = document.createDocumentFragment();
+
+    actionsData.forEach((action, index) => {
+        const row = document.createElement("tr");
+        [index + 1, action.nama, action.kategori, action.poin].forEach((value) => {
+            const cell = document.createElement("td");
+            cell.textContent = String(value);
+            row.appendChild(cell);
+        });
+        fragment.appendChild(row);
+    });
+
+    tableLaporanBody.replaceChildren(fragment);
+}
+
+// Calculate category totals and update the corresponding progress bars.
+function renderStatistikProgress() {
+    const totalPoin = actionsData.reduce((sum, action) => sum + action.poin, 0);
+    const categoryTotals = {
+        "Reduksi Plastik": { points: statPlastik, bar: barPlastik, percent: percentPlastik },
+        "Hemat Energi": { points: statEnergi, bar: barEnergi, percent: percentEnergi },
+        "Daur Ulang": { points: statDaur, bar: barDaur, percent: percentDaur },
+    };
+
+    Object.entries(categoryTotals).forEach(([category, elements]) => {
+        const points = actionsData
+            .filter((action) => action.kategori === category)
+            .reduce((sum, action) => sum + action.poin, 0);
+        const percent = totalPoin ? Math.round((points / totalPoin) * 100) : 0;
+
+        elements.points.textContent = points;
+        elements.percent.textContent = `${percent}%`;
+        elements.bar.style.width = `${percent}%`;
+        elements.bar.parentElement.setAttribute("aria-valuenow", String(percent));
+    });
+
+    document.getElementById("statistics-summary").textContent =
+        `Total ${totalPoin} poin dari ${actionsData.length} aksi tercatat.`;
+}
+
+// Refresh every view that depends on action data.
+function updateAll() {
+    renderDashboardList();
+    renderLaporanTable();
+    renderStatistikProgress();
+}
+
+// Delete one action by its unique id and synchronize all views.
+function deleteAction(id) {
+    actionsData = actionsData.filter((action) => action.id !== id);
+    updateAll();
+}
+
+// Clear the shared action list and refresh every dependent view.
+function clearAllActions() {
+    actionsData = [];
+    updateAll();
+}
+
+// Switch the visible tab and the active navigation item.
+function showTab(targetId) {
+    navLinks.forEach((link) => {
+        const isActive = link.dataset.target === targetId;
+        link.classList.toggle("active", isActive);
+        if (isActive) {
+            link.setAttribute("aria-current", "page");
+        } else {
+            link.removeAttribute("aria-current");
+        }
+    });
+
+    tabContents.forEach((tab) => {
+        const isActive = tab.id === targetId;
+        tab.classList.toggle("active", isActive);
+        tab.hidden = !isActive;
+    });
+
+    const activeLink = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+    document.getElementById("current-tab-title").textContent =
+        activeLink ? activeLink.textContent.trim() : "Dashboard";
+}
+
+// Validate form values and add a new action to shared state.
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const nama = inputNama.value.trim();
+    const kategori = inputKategori.value;
+    const poin = Number(inputPoin.value);
+
+    if (!nama || Number.isNaN(poin) || poin <= 0) {
+        errorMessage.textContent = "Harap isi nama aksi dan poin lebih dari 0.";
+        return;
+    }
+
+    actionsData.push({
+        id: Date.now(),
+        nama,
+        kategori,
+        poin,
+    });
+
+    errorMessage.textContent = "";
+    actionForm.reset();
+    updateAll();
+    inputNama.focus();
+}
+
+// Initialize selectors, event handlers, tab state, and the first render.
+document.addEventListener("DOMContentLoaded", () => {
+    navLinks = document.querySelectorAll(".nav-link");
+    tabContents = document.querySelectorAll(".tab-content");
+    actionForm = document.getElementById("action-form");
+    inputNama = document.getElementById("input-nama");
+    inputKategori = document.getElementById("input-kategori");
+    inputPoin = document.getElementById("input-poin");
+    actionList = document.getElementById("action-list");
+    errorMessage = document.getElementById("error-message");
+    statTotalAksi = document.getElementById("stat-total-aksi");
+    statTotalPoin = document.getElementById("stat-total-poin");
+    btnClearAll = document.getElementById("btn-clear-all");
+    tableLaporanBody = document.getElementById("table-laporan-body");
+    statPlastik = document.getElementById("stat-plastik");
+    barPlastik = document.getElementById("bar-plastik");
+    percentPlastik = document.getElementById("percent-plastik");
+    statEnergi = document.getElementById("stat-energi");
+    barEnergi = document.getElementById("bar-energi");
+    percentEnergi = document.getElementById("percent-energi");
+    statDaur = document.getElementById("stat-daur");
+    barDaur = document.getElementById("bar-daur");
+    percentDaur = document.getElementById("percent-daur");
+
+    navLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            showTab(link.dataset.target);
+        });
     });
 
     actionForm.addEventListener("submit", handleFormSubmit);
-    categoryFilter.addEventListener("change", renderReportTable);
-    clearAllButton.addEventListener("click", clearAllActions);
-
-    actionList.addEventListener("click", (event) => {
-        const button = event.target.closest("[data-delete-id]");
-        if (button) deleteAction(Number(button.dataset.deleteId));
-    });
+    btnClearAll.addEventListener("click", clearAllActions);
 
     document.getElementById("today-label").textContent =
         new Intl.DateTimeFormat("id-ID", {
@@ -264,12 +209,5 @@ document.addEventListener("DOMContentLoaded", () => {
             year: "numeric",
         }).format(new Date());
 
-    readInitialActions();
-    initDummyData();
-    renderAllViews();
-
-    const initialTab = window.location.hash.slice(1);
-    if (["dashboard", "laporan", "statistik"].includes(initialTab)) {
-        showTab(initialTab);
-    }
+    updateAll();
 });

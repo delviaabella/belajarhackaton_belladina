@@ -3,30 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f8fafc">
-    <title>EcoSmart Hub - Monitoring Kinerja Hijau Kampus</title>
+    <meta name="theme-color" content="#f4f6f9">
+    <title>EcoSmart Hub - Dashboard Pelaporan Aksi Hijau Kampus</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
     <div class="dashboard-grid">
         <aside class="sidebar">
-            <div class="logo">🌿 EcoSmart Hub</div>
-
+            <div class="logo">🌿 EcoSmart</div>
             <nav aria-label="Navigasi utama">
                 <ul class="nav-menu">
-                    <li><a class="active" href="#dashboard" data-tab="dashboard" aria-current="page"><span class="nav-icon" aria-hidden="true">▦</span> Dashboard</a></li>
-                    <li><a href="#laporan" data-tab="laporan"><span class="nav-icon" aria-hidden="true">☑</span> Laporan Aksi</a></li>
-                    <li><a href="#statistik" data-tab="statistik"><span class="nav-icon" aria-hidden="true">↗</span> Statistik Kampus</a></li>
+                    <li><a class="nav-link active" href="#tab-dashboard" data-target="tab-dashboard" aria-current="page"><span class="nav-icon" aria-hidden="true">▦</span> Dashboard</a></li>
+                    <li><a class="nav-link" href="#tab-laporan" data-target="tab-laporan"><span class="nav-icon" aria-hidden="true">☑</span> Laporan Aksi</a></li>
+                    <li><a class="nav-link" href="#tab-statistik" data-target="tab-statistik"><span class="nav-icon" aria-hidden="true">↗</span> Statistik Kampus</a></li>
                 </ul>
             </nav>
-
             <div class="sidebar-note">
-                <span class="note-icon" aria-hidden="true">✦</span>
+                <span aria-hidden="true">✦</span>
                 <p>Langkah kecil hari ini,<br><strong>bumi lebih baik esok.</strong></p>
-                <span class="note-caption">Setiap aksi hijau berarti.</span>
             </div>
-
             <p class="sidebar-footer"><span aria-hidden="true">●</span> Bersama jaga bumi</p>
         </aside>
 
@@ -36,31 +32,25 @@
                 <p id="today-label" class="today-label"></p>
             </header>
 
-            <section id="dashboard-tab" class="tab-content active" aria-labelledby="dashboard-title">
-                <header class="header">
+            <section id="tab-dashboard" class="tab-content active" aria-labelledby="dashboard-title">
+                <header class="page-header">
                     <div>
                         <p class="eyebrow">DASHBOARD AKSI HIJAU</p>
                         <h1 id="dashboard-title">Dashboard Pelaporan Aksi Hijau Kampus</h1>
-                        <p class="header-description">Catat kontribusimu dan pantau dampak baik yang kita buat bersama.</p>
+                        <p class="page-description">Catat kontribusimu dan pantau dampak baik yang kita buat bersama.</p>
                     </div>
-                    <a class="button button-primary" href="#action-form">＋ Catat aksi</a>
                 </header>
 
-                <section id="dashboard-statistik" class="stats-container" aria-label="Ringkasan kinerja hijau">
+                <section class="stats-container" aria-label="Ringkasan aksi hijau">
                     <article class="stat-card highlight-green">
-                        <div class="stat-card-heading"><span class="stat-icon">☑</span><span class="stat-label">AKSI TERLAKSANA</span></div>
+                        <div class="stat-card-heading"><span class="stat-icon" aria-hidden="true">☑</span><span class="stat-label">AKSI TERLAKSANA</span></div>
                         <p id="stat-total-aksi" class="stat-value">1</p>
                         <p class="stat-caption">aksi hijau tercatat</p>
                     </article>
                     <article class="stat-card highlight-blue">
-                        <div class="stat-card-heading"><span class="stat-icon">✦</span><span class="stat-label">POIN LINGKUNGAN</span></div>
+                        <div class="stat-card-heading"><span class="stat-icon" aria-hidden="true">✦</span><span class="stat-label">POIN LINGKUNGAN</span></div>
                         <p id="stat-total-poin" class="stat-value">10</p>
                         <p class="stat-caption">poin terkumpul</p>
-                    </article>
-                    <article class="stat-card highlight-orange">
-                        <div class="stat-card-heading"><span class="stat-icon">◎</span><span class="stat-label">STATUS TARGET BULANAN</span></div>
-                        <p id="stat-target" class="stat-value">Aktif</p>
-                        <p class="stat-caption">target 100 poin</p>
                     </article>
                 </section>
 
@@ -70,9 +60,8 @@
                             <p class="eyebrow">KONTRIBUSI BARU</p>
                             <h2 id="form-title">Tambah Aksi Hijau Baru</h2>
                         </div>
-                        <span class="section-index" aria-hidden="true">01</span>
+                        <span class="section-number" aria-hidden="true">01</span>
                     </div>
-
                     <form id="action-form" novalidate>
                         <div class="form-group">
                             <label for="input-nama">Nama aksi</label>
@@ -86,119 +75,94 @@
                                 <option value="Daur Ulang">Daur Ulang</option>
                             </select>
                         </div>
-                        <div class="form-group points-field">
+                        <div class="form-group">
                             <label for="input-poin">Poin aksi</label>
                             <div class="input-suffix">
                                 <input type="number" id="input-poin" name="poin" min="1" step="1" placeholder="10" required>
                                 <span>poin</span>
                             </div>
                         </div>
-                        <button class="button button-primary submit-button" id="btn-submit" type="submit">Simpan Aksi</button>
+                        <button class="button button-primary" id="btn-submit" type="submit">Simpan Aksi</button>
                     </form>
-                    <div id="error-message" class="error-text" role="alert" aria-live="polite"></div>
+                    <div id="error-message" class="error-message" role="alert" aria-live="polite"></div>
                 </section>
 
-                <section class="list-container panel" aria-labelledby="recent-title">
+                <section class="list-container panel" aria-labelledby="dashboard-list-title">
                     <div class="list-header">
                         <div>
                             <p class="eyebrow">JEJAK KEBAIKAN</p>
-                            <h2 id="recent-title">Aksi terbaru</h2>
+                            <h2 id="dashboard-list-title">Aksi terbaru</h2>
                         </div>
-                        <div class="list-header-actions">
-                            <button class="button button-secondary" type="button" data-open-tab="laporan">Lihat laporan</button>
-                            <button class="btn-danger" id="btn-clear-all" type="button">Hapus Semua</button>
-                        </div>
+                        <button class="button button-danger" id="btn-clear-all" type="button">Hapus Semua</button>
                     </div>
-                    <ul id="action-list" class="action-list">
-                        <li class="action-item" data-poin="10" data-action-id="1" data-nama="Membawa Tumbler" data-kategori="Reduksi Plastik" data-status="Terverifikasi">
-                            <span class="item-text">[Reduksi Plastik] Membawa Tumbler (10 Poin)</span>
-                            <button class="btn-delete" data-delete-id="1" type="button" aria-label="Hapus aksi Membawa Tumbler">Hapus</button>
-                        </li>
-                    </ul>
-                    <p id="empty-state" class="empty-state" hidden>Belum ada aksi tercatat. Yuk, mulai aksi hijau pertamamu!</p>
-                    <p id="list-count" class="list-footnote">1 aksi tercatat</p>
+                    <ul id="action-list" class="action-list"></ul>
+                    <p id="empty-dashboard" class="empty-message" hidden>Belum ada aksi tercatat. Tambahkan aksi pertamamu!</p>
                 </section>
             </section>
 
-            <section id="laporan-tab" class="tab-content" aria-labelledby="report-title" hidden>
-                <header class="page-heading">
+            <section id="tab-laporan" class="tab-content" aria-labelledby="report-title" hidden>
+                <header class="page-header">
                     <p class="eyebrow">JEJAK KONTRIBUSI</p>
                     <h1 id="report-title">Laporan Aksi</h1>
-                    <p class="header-description">Tinjau dan filter seluruh aksi hijau yang telah dilaporkan.</p>
+                    <p class="page-description">Rangkuman seluruh aksi hijau yang telah dilaporkan.</p>
                 </header>
-                <section class="panel report-panel" aria-labelledby="report-table-title">
+                <section class="panel report-panel" aria-label="Tabel laporan aksi">
                     <div class="list-header">
                         <div>
                             <p class="eyebrow">RIWAYAT AKSI</p>
-                            <h2 id="report-table-title">Semua laporan</h2>
+                            <h2>Semua laporan</h2>
                         </div>
-                        <label class="filter-control">
-                            <span>Filter kategori</span>
-                            <select id="report-category-filter">
-                                <option value="all">Semua kategori</option>
-                                <option value="Reduksi Plastik">Reduksi Plastik</option>
-                                <option value="Hemat Energi">Hemat Energi</option>
-                                <option value="Daur Ulang">Daur Ulang</option>
-                            </select>
-                        </label>
+                        <span id="report-count" class="report-count"></span>
                     </div>
-                    <div class="table-wrap">
-                        <table class="report-table">
+                    <div class="table-wrapper">
+                        <table class="data-table">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Nama Aksi</th>
                                     <th scope="col">Kategori</th>
                                     <th scope="col">Poin</th>
-                                    <th scope="col">Status Verifikasi</th>
                                 </tr>
                             </thead>
-                            <tbody id="report-table-body"></tbody>
+                            <tbody id="table-laporan-body"></tbody>
                         </table>
-                        <p id="report-empty-state" class="empty-state" hidden>Tidak ada aksi untuk kategori ini.</p>
+                        <p id="empty-report" class="empty-message" hidden>Belum ada aksi untuk ditampilkan.</p>
                     </div>
-                    <p id="report-count" class="list-footnote"></p>
                 </section>
             </section>
 
-            <section id="statistik-tab" class="tab-content" aria-labelledby="statistics-title" hidden>
-                <header class="page-heading">
+            <section id="tab-statistik" class="tab-content" aria-labelledby="statistics-title" hidden>
+                <header class="page-header">
                     <p class="eyebrow">DAMPAK BERSAMA</p>
                     <h1 id="statistics-title">Statistik Kampus</h1>
-                    <p class="header-description">Lihat kontribusi poin dari setiap kategori aksi hijau.</p>
+                    <p class="page-description">Poin dan persentase kontribusi untuk setiap kategori aksi.</p>
                 </header>
-                <section class="category-stats" aria-label="Poin dan persentase berdasarkan kategori">
-                    <article class="category-stat-card panel category-plastic">
-                        <div class="category-card-heading">
-                            <span class="category-symbol" aria-hidden="true">↘</span>
-                            <span class="category-percentage" id="plastic-percent">0%</span>
+                <section class="progress-list panel" aria-label="Kontribusi poin menurut kategori">
+                    <article class="progress-group">
+                        <div class="progress-heading">
+                            <div><span class="category-dot plastic-dot"></span><h2>Reduksi Plastik</h2></div>
+                            <p><strong id="stat-plastik">0</strong><span> poin</span><span class="percentage" id="percent-plastik">0%</span></p>
                         </div>
-                        <p class="category-name">Reduksi Plastik</p>
-                        <p class="category-points"><strong id="plastic-points">0</strong> <span>poin terkumpul</span></p>
-                        <div class="progress-track" role="progressbar" aria-label="Kontribusi reduksi plastik" aria-valuemin="0" aria-valuemax="100">
-                            <span id="plastic-progress"></span>
+                        <div class="progress-bar-bg" role="progressbar" aria-label="Kontribusi reduksi plastik" aria-valuemin="0" aria-valuemax="100">
+                            <div id="bar-plastik" class="progress-bar plastic-bar"></div>
                         </div>
                     </article>
-                    <article class="category-stat-card panel category-energy">
-                        <div class="category-card-heading">
-                            <span class="category-symbol" aria-hidden="true">ϟ</span>
-                            <span class="category-percentage" id="energy-percent">0%</span>
+                    <article class="progress-group">
+                        <div class="progress-heading">
+                            <div><span class="category-dot energy-dot"></span><h2>Hemat Energi</h2></div>
+                            <p><strong id="stat-energi">0</strong><span> poin</span><span class="percentage" id="percent-energi">0%</span></p>
                         </div>
-                        <p class="category-name">Hemat Energi</p>
-                        <p class="category-points"><strong id="energy-points">0</strong> <span>poin terkumpul</span></p>
-                        <div class="progress-track" role="progressbar" aria-label="Kontribusi hemat energi" aria-valuemin="0" aria-valuemax="100">
-                            <span id="energy-progress"></span>
+                        <div class="progress-bar-bg" role="progressbar" aria-label="Kontribusi hemat energi" aria-valuemin="0" aria-valuemax="100">
+                            <div id="bar-energi" class="progress-bar energy-bar"></div>
                         </div>
                     </article>
-                    <article class="category-stat-card panel category-recycle">
-                        <div class="category-card-heading">
-                            <span class="category-symbol" aria-hidden="true">⟳</span>
-                            <span class="category-percentage" id="recycle-percent">0%</span>
+                    <article class="progress-group">
+                        <div class="progress-heading">
+                            <div><span class="category-dot recycle-dot"></span><h2>Daur Ulang</h2></div>
+                            <p><strong id="stat-daur">0</strong><span> poin</span><span class="percentage" id="percent-daur">0%</span></p>
                         </div>
-                        <p class="category-name">Daur Ulang</p>
-                        <p class="category-points"><strong id="recycle-points">0</strong> <span>poin terkumpul</span></p>
-                        <div class="progress-track" role="progressbar" aria-label="Kontribusi daur ulang" aria-valuemin="0" aria-valuemax="100">
-                            <span id="recycle-progress"></span>
+                        <div class="progress-bar-bg" role="progressbar" aria-label="Kontribusi daur ulang" aria-valuemin="0" aria-valuemax="100">
+                            <div id="bar-daur" class="progress-bar recycle-bar"></div>
                         </div>
                     </article>
                 </section>
