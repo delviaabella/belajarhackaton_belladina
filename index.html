@@ -9,28 +9,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="hack.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="dashboard-grid">
         <aside class="sidebar">
-            <a class="brand" href="#dashboard" aria-label="EcoSmart Hub, dashboard">
-                <span class="brand-icon" aria-hidden="true">✳</span>
-                <span>EcoSmart<span class="brand-light">Hub</span></span>
+            <a class="brand" href="#dashboard" aria-label="EcoSmart Hub">
+                <span aria-hidden="true">🌿</span>
+                <span>EcoSmart Hub</span>
             </a>
 
             <p class="nav-label">MENU UTAMA</p>
             <nav class="nav-menu" aria-label="Menu utama">
                 <a class="nav-link active" href="#dashboard"><span aria-hidden="true">▦</span> Dashboard</a>
-                <a class="nav-link" href="#laporan"><span aria-hidden="true">☑</span> Laporan aksi</a>
-                <a class="nav-link" href="#statistik"><span aria-hidden="true">↗</span> Statistik</a>
+                <a class="nav-link" href="#laporan"><span aria-hidden="true">☑</span> Laporan Aksi</a>
+                <a class="nav-link" href="#statistik"><span aria-hidden="true">↗</span> Statistik Kampus</a>
             </nav>
 
-            <section class="sidebar-goal" aria-label="Target poin">
-                <span class="goal-icon" aria-hidden="true">✦</span>
+            <aside class="sidebar-note">
+                <span class="note-icon" aria-hidden="true">✦</span>
                 <p>Langkah kecil hari ini,<br><strong>bumi lebih baik esok.</strong></p>
-                <span class="goal-caption">Setiap aksi hijau berarti.</span>
-            </section>
+                <span class="note-caption">Setiap aksi hijau berarti.</span>
+            </aside>
 
             <div class="sidebar-footer">
                 <span class="online-dot" aria-hidden="true"></span>
@@ -44,7 +44,10 @@
                 <div class="topbar-profile">
                     <span id="today-label" class="today-label"></span>
                     <span class="avatar" aria-hidden="true">KM</span>
-                    <div class="profile-copy"><strong>Komunitas Kampus</strong><span>Eco member</span></div>
+                    <div class="profile-copy">
+                        <strong>Komunitas Kampus</strong>
+                        <span>Eco member</span>
+                    </div>
                 </div>
             </header>
 
@@ -54,38 +57,45 @@
                     <h1>Setiap aksi punya arti <span aria-hidden="true">🌱</span></h1>
                     <p class="welcome-copy">Catat kontribusimu dan lihat dampak baik yang kita buat bersama.</p>
                 </div>
-                <a class="primary-button" href="#tambah-aksi"><span aria-hidden="true">＋</span> Catat aksi</a>
+                <a class="primary-button" href="#action-form"><span aria-hidden="true">＋</span> Catat aksi</a>
             </section>
 
             <section id="statistik" class="stats-container" aria-label="Statistik aksi hijau">
                 <article class="stat-card">
-                    <div class="stat-top"><span class="stat-icon mint" aria-hidden="true">☑</span><span class="stat-tag">AKSI TERLAKSANA</span></div>
-                    <p id="stat-total-aksi" class="stat-value">0</p>
+                    <div class="stat-top">
+                        <span class="stat-icon mint" aria-hidden="true">☑</span>
+                        <span class="stat-label">AKSI TERLAKSANA</span>
+                    </div>
+                    <p id="stat-total-aksi" class="stat-value">1</p>
                     <p class="stat-caption">aksi hijau tercatat</p>
                 </article>
                 <article class="stat-card">
-                    <div class="stat-top"><span class="stat-icon blue" aria-hidden="true">✦</span><span class="stat-tag">POIN LINGKUNGAN</span></div>
-                    <p id="stat-total-poin" class="stat-value">0</p>
+                    <div class="stat-top">
+                        <span class="stat-icon blue" aria-hidden="true">✦</span>
+                        <span class="stat-label">POIN LINGKUNGAN</span>
+                    </div>
+                    <p id="stat-total-poin" class="stat-value">10</p>
                     <p class="stat-caption">poin terkumpul</p>
                 </article>
-                <article class="stat-card target-card">
-                    <div class="stat-top"><span class="stat-icon peach" aria-hidden="true">◎</span><span class="stat-tag">TARGET MINGGUAN</span></div>
-                    <p class="stat-value"><span id="stat-target-progress">0</span><span class="target-divider"> / </span><span id="stat-target">100</span></p>
-                    <div class="target-track" role="progressbar" aria-label="Progres target poin mingguan" aria-valuemin="0" aria-valuemax="100">
-                        <span id="target-progress-bar"></span>
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon peach" aria-hidden="true">◎</span>
+                        <span class="stat-label">TARGET MINGGUAN</span>
                     </div>
+                    <p id="stat-target" class="stat-value target-status">Dalam progres</p>
+                    <p class="stat-caption">target 100 poin</p>
                 </article>
             </section>
 
-            <section id="tambah-aksi" class="form-container panel">
+            <section class="form-container panel" aria-labelledby="form-title">
                 <div class="section-heading">
                     <div>
                         <p class="eyebrow">KONTRIBUSI BARU</p>
-                        <h2>Catat aksi hijau</h2>
+                        <h2 id="form-title">Catat aksi hijau</h2>
                     </div>
                     <span class="heading-mark" aria-hidden="true">01</span>
                 </div>
-                <form id="action-form" class="action-form" novalidate>
+                <form id="action-form" novalidate>
                     <div class="form-group">
                         <label for="input-nama">Nama aksi</label>
                         <input type="text" id="input-nama" name="nama" placeholder="Contoh: Membawa tumbler sendiri" maxlength="80" required>
@@ -101,46 +111,35 @@
                     <div class="form-group points-field">
                         <label for="input-poin">Poin aksi</label>
                         <div class="input-suffix">
-                            <input type="number" id="input-poin" name="poin" placeholder="10" min="1" max="1000" step="1" required>
+                            <input type="number" id="input-poin" name="poin" placeholder="10" min="1" step="1" required>
                             <span>poin</span>
                         </div>
                     </div>
-                    <button class="primary-button submit-button" type="submit">Simpan aksi <span aria-hidden="true">→</span></button>
-                    <p id="error-message" class="error-text" role="alert" aria-live="polite"></p>
+                    <button class="primary-button submit-button" id="btn-submit" type="submit">
+                        Simpan aksi <span aria-hidden="true">→</span>
+                    </button>
                 </form>
                 <p class="form-hint"><span aria-hidden="true">i</span> Berikan poin sesuai dampak positif aksimu.</p>
+                <p id="error-message" class="error-text" role="alert" aria-live="polite"></p>
             </section>
 
-            <section id="laporan" class="list-container panel">
+            <section id="laporan" class="list-container panel" aria-labelledby="list-title">
                 <div class="list-header">
                     <div>
                         <p class="eyebrow">JEJAK KEBAIKAN</p>
-                        <h2>Laporan aksi terkini</h2>
+                        <h2 id="list-title">Laporan aksi terkini</h2>
                     </div>
-                    <button id="btn-clear-all" class="clear-all-button" type="button" disabled>Hapus semua</button>
+                    <button class="btn-danger" id="btn-clear-all" type="button">Hapus Semua</button>
                 </div>
-                <div class="list-toolbar">
-                    <label class="search-box">
-                        <span aria-hidden="true">⌕</span>
-                        <input id="input-search" type="search" placeholder="Cari nama aksi..." aria-label="Cari nama aksi">
-                    </label>
-                    <label class="filter-select">
-                        <span class="sr-only">Filter kategori</span>
-                        <select id="input-filter" aria-label="Filter kategori">
-                            <option value="all">Semua kategori</option>
-                            <option value="Reduksi Plastik">Reduksi Plastik</option>
-                            <option value="Hemat Energi">Hemat Energi</option>
-                            <option value="Daur Ulang">Daur Ulang</option>
-                        </select>
-                    </label>
-                </div>
-                <ul id="action-list" class="action-list" aria-live="polite"></ul>
-                <div id="empty-state" class="empty-state" hidden>
-                    <span aria-hidden="true">🍃</span>
-                    <strong id="empty-title">Belum ada aksi tercatat</strong>
-                    <p id="empty-copy">Mulai dari satu langkah kecil dan catat aksi pertamamu.</p>
-                </div>
-                <p id="list-count" class="list-footnote"></p>
+                <ul id="action-list">
+                    <li class="action-item" data-poin="10">
+                        <span class="category-icon category-plastic" aria-hidden="true">↘</span>
+                        <span class="item-text">[Reduksi Plastik] Membawa Tumbler (10 Poin)</span>
+                        <button class="btn-delete" type="button" aria-label="Hapus aksi Membawa Tumbler">Hapus</button>
+                    </li>
+                </ul>
+                <p id="empty-state" class="empty-state" hidden>Belum ada aksi tercatat. Yuk, mulai aksi hijau pertamamu!</p>
+                <p id="list-count" class="list-footnote">1 aksi tercatat</p>
             </section>
 
             <footer class="page-footer">Dibuat untuk kampus yang lebih hijau <span aria-label="cinta">♥</span></footer>
