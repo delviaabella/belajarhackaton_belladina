@@ -3,173 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f5f7f4">
-    <title>HackReady — Dashboard Latihan Hackathon</title>
+    <meta name="theme-color" content="#f4f6f9">
+    <title>EcoSmart Hub — Aksi Hijau Kampus</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="hack.js" defer></script>
 </head>
 <body>
-    <div id="app" class="dashboard-grid">
+    <div class="dashboard-grid">
         <aside class="sidebar">
-            <a class="brand" href="#dashboard" aria-label="HackReady, dashboard">
-                <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
-                <span>hack<span>ready</span></span>
+            <a class="brand" href="#dashboard" aria-label="EcoSmart Hub, dashboard">
+                <span class="brand-icon" aria-hidden="true">✳</span>
+                <span>EcoSmart<span class="brand-light">Hub</span></span>
             </a>
 
-            <p class="nav-label">WORKSPACE</p>
-            <nav class="nav-menu" aria-label="Navigasi utama">
+            <p class="nav-label">MENU UTAMA</p>
+            <nav class="nav-menu" aria-label="Menu utama">
                 <a class="nav-link active" href="#dashboard"><span aria-hidden="true">▦</span> Dashboard</a>
-                <a class="nav-link" href="#checklist"><span aria-hidden="true">☑</span> Checklist latihan</a>
-                <a class="nav-link" href="#schedule"><span aria-hidden="true">◷</span> Jadwal</a>
+                <a class="nav-link" href="#laporan"><span aria-hidden="true">☑</span> Laporan aksi</a>
+                <a class="nav-link" href="#statistik"><span aria-hidden="true">↗</span> Statistik</a>
             </nav>
 
-            <div class="sidebar-event">
-                <span class="event-label">EVENT BERIKUTNYA</span>
-                <span class="event-icon" aria-hidden="true">⚡</span>
-                <strong>Web Development<br>Hackathon</strong>
-                <span class="event-date">{{ deadlineLabel }}</span>
-                <span class="event-status"><span></span> Persiapan berlangsung</span>
-            </div>
+            <section class="sidebar-goal" aria-label="Target poin">
+                <span class="goal-icon" aria-hidden="true">✦</span>
+                <p>Langkah kecil hari ini,<br><strong>bumi lebih baik esok.</strong></p>
+                <span class="goal-caption">Setiap aksi hijau berarti.</span>
+            </section>
 
             <div class="sidebar-footer">
-                <span class="avatar">AN</span>
-                <span class="profile-name"><strong>Ardi Nugraha</strong><small>Peserta hackathon</small></span>
-                <span class="footer-menu" aria-hidden="true">···</span>
+                <span class="online-dot" aria-hidden="true"></span>
+                Bersama jaga bumi
             </div>
         </aside>
 
         <main id="dashboard" class="main-content">
             <header class="topbar">
                 <div class="breadcrumb">Workspace <span>/</span> <strong>Dashboard</strong></div>
-                <div class="topbar-right">
-                    <span class="today-label">{{ todayLabel }}</span>
-                    <button class="icon-button notification-button" type="button" aria-label="Notifikasi">
-                        ♧<span class="notification-dot"></span>
-                    </button>
+                <div class="topbar-profile">
+                    <span id="today-label" class="today-label"></span>
+                    <span class="avatar" aria-hidden="true">KM</span>
+                    <div class="profile-copy"><strong>Komunitas Kampus</strong><span>Eco member</span></div>
                 </div>
             </header>
 
             <section class="welcome">
                 <div>
-                    <p class="eyebrow">{{ todayLabel.toLocaleUpperCase("id-ID") }}</p>
-                    <h1>Siap untuk besok, Ardi? <span aria-hidden="true">✦</span></h1>
-                    <p class="welcome-copy">Sedikit persiapan hari ini, bikin kamu lebih percaya diri besok.</p>
+                    <p class="eyebrow">DASHBOARD AKSI HIJAU</p>
+                    <h1>Setiap aksi punya arti <span aria-hidden="true">🌱</span></h1>
+                    <p class="welcome-copy">Catat kontribusimu dan lihat dampak baik yang kita buat bersama.</p>
                 </div>
-                <a class="primary-button" href="#checklist"><span aria-hidden="true">＋</span> Mulai latihan</a>
+                <a class="primary-button" href="#tambah-aksi"><span aria-hidden="true">＋</span> Catat aksi</a>
             </section>
 
-            <section class="countdown-panel" aria-labelledby="countdown-title">
-                <div class="countdown-copy">
-                    <span class="countdown-kicker"><span class="live-dot"></span> HACKATHON DIMULAI DALAM</span>
-                    <h2 id="countdown-title">Waktunya makin dekat.</h2>
-                    <p>Gunakan waktu yang tersisa untuk review materi dan persiapan tim.</p>
-                    <span class="deadline-note"><span aria-hidden="true">◷</span> {{ deadlineLabel }} · 08.00 WIB</span>
-                </div>
-                <div class="countdown" role="timer" aria-label="Hitung mundur menuju hackathon">
-                    <div class="time-unit"><strong>{{ countdown.days }}</strong><span>HARI</span></div>
-                    <span class="time-colon">:</span>
-                    <div class="time-unit"><strong>{{ countdown.hours }}</strong><span>JAM</span></div>
-                    <span class="time-colon">:</span>
-                    <div class="time-unit"><strong>{{ countdown.minutes }}</strong><span>MENIT</span></div>
-                    <span class="time-colon seconds-colon">:</span>
-                    <div class="time-unit seconds-unit"><strong>{{ countdown.seconds }}</strong><span>DETIK</span></div>
-                </div>
-                <div class="countdown-decoration" aria-hidden="true">✳</div>
-            </section>
-
-            <section class="overview-grid" aria-label="Ringkasan progres">
-                <article class="progress-card panel">
-                    <div class="card-heading">
-                        <div>
-                            <p class="eyebrow">PROGRES PERSIAPAN</p>
-                            <h2>Langkah kecil, siap besar.</h2>
-                        </div>
-                        <span class="progress-icon" aria-hidden="true">↗</span>
-                    </div>
-                    <div class="progress-content">
-                        <div class="progress-ring" :style="{ '--progress': progressPercent + '%' }" role="img" :aria-label="progressPercent + '% latihan selesai'">
-                            <div><strong>{{ progressPercent }}<span>%</span></strong><small>SELESAI</small></div>
-                        </div>
-                        <div class="progress-details">
-                            <p class="progress-count"><strong>{{ completedCount }}</strong> dari {{ tasks.length }} target selesai</p>
-                            <div class="progress-track"><span :style="{ width: progressPercent + '%' }"></span></div>
-                            <p class="progress-tip"><span aria-hidden="true">✦</span> {{ progressMessage }}</p>
-                        </div>
-                    </div>
+            <section id="statistik" class="stats-container" aria-label="Statistik aksi hijau">
+                <article class="stat-card">
+                    <div class="stat-top"><span class="stat-icon mint" aria-hidden="true">☑</span><span class="stat-tag">AKSI TERLAKSANA</span></div>
+                    <p id="stat-total-aksi" class="stat-value">0</p>
+                    <p class="stat-caption">aksi hijau tercatat</p>
                 </article>
-
-                <article class="focus-card panel">
-                    <p class="eyebrow">FOKUS HARI INI</p>
-                    <h2>Review fondasi web</h2>
-                    <p>Pastikan HTML, CSS, dan JavaScript dasar sudah siap dipakai untuk membangun ide.</p>
-                    <div class="focus-tags">
-                        <span>HTML</span><span>CSS</span><span>JavaScript</span>
+                <article class="stat-card">
+                    <div class="stat-top"><span class="stat-icon blue" aria-hidden="true">✦</span><span class="stat-tag">POIN LINGKUNGAN</span></div>
+                    <p id="stat-total-poin" class="stat-value">0</p>
+                    <p class="stat-caption">poin terkumpul</p>
+                </article>
+                <article class="stat-card target-card">
+                    <div class="stat-top"><span class="stat-icon peach" aria-hidden="true">◎</span><span class="stat-tag">TARGET MINGGUAN</span></div>
+                    <p class="stat-value"><span id="stat-target-progress">0</span><span class="target-divider"> / </span><span id="stat-target">100</span></p>
+                    <div class="target-track" role="progressbar" aria-label="Progres target poin mingguan" aria-valuemin="0" aria-valuemax="100">
+                        <span id="target-progress-bar"></span>
                     </div>
-                    <a href="#checklist">Lihat checklist <span aria-hidden="true">→</span></a>
-                    <span class="focus-decoration" aria-hidden="true">&lt;/&gt;</span>
                 </article>
             </section>
 
-            <section class="content-grid">
-                <section id="checklist" class="checklist-card panel">
-                    <div class="section-heading">
-                        <div>
-                            <p class="eyebrow">RUTE PERSIAPAN</p>
-                            <h2>Checklist latihan</h2>
+            <section id="tambah-aksi" class="form-container panel">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">KONTRIBUSI BARU</p>
+                        <h2>Catat aksi hijau</h2>
+                    </div>
+                    <span class="heading-mark" aria-hidden="true">01</span>
+                </div>
+                <form id="action-form" class="action-form" novalidate>
+                    <div class="form-group">
+                        <label for="input-nama">Nama aksi</label>
+                        <input type="text" id="input-nama" name="nama" placeholder="Contoh: Membawa tumbler sendiri" maxlength="80" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-kategori">Kategori</label>
+                        <select id="input-kategori" name="kategori" required>
+                            <option value="Reduksi Plastik">Reduksi Plastik</option>
+                            <option value="Hemat Energi">Hemat Energi</option>
+                            <option value="Daur Ulang">Daur Ulang</option>
+                        </select>
+                    </div>
+                    <div class="form-group points-field">
+                        <label for="input-poin">Poin aksi</label>
+                        <div class="input-suffix">
+                            <input type="number" id="input-poin" name="poin" placeholder="10" min="1" max="1000" step="1" required>
+                            <span>poin</span>
                         </div>
-                        <span class="task-counter">{{ completedCount }}/{{ tasks.length }} selesai</span>
                     </div>
-                    <form class="add-task-form" @submit.prevent="addTask">
-                        <label class="sr-only" for="new-task">Tambah target latihan</label>
-                        <input id="new-task" v-model.trim="newTaskTitle" type="text" maxlength="70" placeholder="Tulis target latihan baru..." required>
-                        <button class="add-task-button" type="submit" aria-label="Tambah target">+</button>
-                    </form>
-                    <ul class="task-list">
-                        <li v-for="task in tasks" :key="task.id" class="task-item" :class="{ 'is-complete': task.completed }">
-                            <label class="task-label">
-                                <input type="checkbox" :checked="task.completed" @change="toggleTask(task.id)">
-                                <span class="custom-checkbox" aria-hidden="true">✓</span>
-                                <span class="task-copy"><strong>{{ task.title }}</strong><small>{{ task.category }}</small></span>
-                            </label>
-                            <button class="delete-task" type="button" :aria-label="'Hapus target ' + task.title" @click="deleteTask(task.id)">×</button>
-                        </li>
-                    </ul>
-                    <div v-if="tasks.length === 0" class="empty-tasks">
-                        <span aria-hidden="true">✎</span>
-                        <p>Checklist kosong. Tambahkan target latihanmu di atas.</p>
-                    </div>
-                    <button class="clear-button" type="button" :disabled="completedCount === 0" @click="clearCompleted">Hapus target yang selesai</button>
-                </section>
-
-                <aside id="schedule" class="schedule-card panel">
-                    <div class="section-heading">
-                        <div>
-                            <p class="eyebrow">JANGAN SAMPAI TERLEWAT</p>
-                            <h2>Rencana hari ini</h2>
-                        </div>
-                        <span class="calendar-icon" aria-hidden="true">▦</span>
-                    </div>
-                    <ol class="schedule-list">
-                        <li v-for="item in schedule" :key="item.time" class="schedule-item" :class="{ 'schedule-current': item.current }">
-                            <span class="schedule-time">{{ item.time }}</span>
-                            <span class="schedule-marker" aria-hidden="true"></span>
-                            <span class="schedule-copy"><strong>{{ item.title }}</strong><small>{{ item.description }}</small></span>
-                        </li>
-                    </ol>
-                    <div class="team-tip">
-                        <span class="tip-icon" aria-hidden="true">✦</span>
-                        <p><strong>Tips hackathon</strong><br>Komunikasi yang jelas adalah fitur terbaik dalam sebuah tim.</p>
-                    </div>
-                </aside>
+                    <button class="primary-button submit-button" type="submit">Simpan aksi <span aria-hidden="true">→</span></button>
+                    <p id="error-message" class="error-text" role="alert" aria-live="polite"></p>
+                </form>
+                <p class="form-hint"><span aria-hidden="true">i</span> Berikan poin sesuai dampak positif aksimu.</p>
             </section>
 
-            <footer class="page-footer">Fokus pada proses. Tunjukkan ide terbaikmu besok. <span>✦</span></footer>
+            <section id="laporan" class="list-container panel">
+                <div class="list-header">
+                    <div>
+                        <p class="eyebrow">JEJAK KEBAIKAN</p>
+                        <h2>Laporan aksi terkini</h2>
+                    </div>
+                    <button id="btn-clear-all" class="clear-all-button" type="button" disabled>Hapus semua</button>
+                </div>
+                <div class="list-toolbar">
+                    <label class="search-box">
+                        <span aria-hidden="true">⌕</span>
+                        <input id="input-search" type="search" placeholder="Cari nama aksi..." aria-label="Cari nama aksi">
+                    </label>
+                    <label class="filter-select">
+                        <span class="sr-only">Filter kategori</span>
+                        <select id="input-filter" aria-label="Filter kategori">
+                            <option value="all">Semua kategori</option>
+                            <option value="Reduksi Plastik">Reduksi Plastik</option>
+                            <option value="Hemat Energi">Hemat Energi</option>
+                            <option value="Daur Ulang">Daur Ulang</option>
+                        </select>
+                    </label>
+                </div>
+                <ul id="action-list" class="action-list" aria-live="polite"></ul>
+                <div id="empty-state" class="empty-state" hidden>
+                    <span aria-hidden="true">🍃</span>
+                    <strong id="empty-title">Belum ada aksi tercatat</strong>
+                    <p id="empty-copy">Mulai dari satu langkah kecil dan catat aksi pertamamu.</p>
+                </div>
+                <p id="list-count" class="list-footnote"></p>
+            </section>
+
+            <footer class="page-footer">Dibuat untuk kampus yang lebih hijau <span aria-label="cinta">♥</span></footer>
         </main>
     </div>
-
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="hack.js" defer></script>
 </body>
 </html>
