@@ -141,16 +141,46 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 @media (max-width: 768px) {
     .dashboard-grid { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
+    .sidebar {
+        position: sticky;
+        z-index: 5;
+        top: 0;
+        display: flex;
+        height: auto;
+        gap: 10px;
+        padding: 12px 20px 10px;
+        box-shadow: var(--shadow);
+    }
+    .logo { margin: 0; font-size: 17px; }
+    .sidebar nav { width: 100%; }
+    .nav-menu { display: flex; gap: 4px; }
+    .nav-menu li { min-width: 0; flex: 1; }
+    .nav-link { justify-content: center; gap: 6px; padding: 9px 5px; font-size: 10px; }
+    .sidebar-note, .sidebar-footer { display: none; }
     .main-content { padding: 0 20px 20px; }
     .stats-container, #action-form { flex-direction: column; align-items: stretch; }
     .form-group { width: 100%; }
+    #action-form > .button { width: 100%; }
+    .page-header { padding-top: 22px; }
 }
 
 @media (max-width: 480px) {
     .main-content { padding-right: 14px; padding-left: 14px; }
+    .sidebar { padding: 10px 12px 8px; }
+    .nav-link { gap: 4px; padding: 9px 3px; font-size: 9px; }
+    .nav-icon { width: auto; font-size: 13px; }
+    .topbar { min-height: 52px; }
     .today-label { display: none; }
-    .page-header h1 { font-size: 21px; }
+    .page-header h1 { max-width: 24ch; font-size: 21px; line-height: 1.25; }
+    .page-description { max-width: 42ch; }
     .panel { padding: 16px 14px; }
+    .stat-card { min-height: 112px; padding: 15px; }
+    .stat-label { font-size: 8px; }
+    .list-header { align-items: flex-start; }
+    .action-item { gap: 8px; padding: 9px; }
+    .item-text { font-size: 9px; }
+    .btn-delete { padding: 0 7px; }
+    .progress-heading { align-items: flex-start; }
+    .progress-heading h2 { font-size: 11px; }
     .data-table th, .data-table td { padding: 10px 8px; }
 }
