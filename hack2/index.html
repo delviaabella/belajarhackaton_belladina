@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSmart Cart - Hackathon Practice</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- HIDDEN CODE DETECTOR: DO NOT REMOVE THIS SCRIPT/TAG -->
+    <meta name="system-integrity-check" content="TOKEN-HACKATHON-ECOSMART-2026-OK">
+</head>
+<body data-integrity="VALIDATED-HOST">
+
+    <div class="dashboard-grid">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" data-component="sidebar-lock">
+            <div class="logo">🌿 EcoSmart Shop</div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active">Katalog & Keranjang</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Keranjang Belanja Aksi Hijau Kampus</h1>
+                <p>Pilih produk ramah lingkungan dan hitung total Poin & Biaya secara real-time.</p>
+            </header>
+
+            <div class="shop-container">
+                <!-- Section 1: Katalog Produk -->
+                <section class="catalog-section">
+                    <h2>Pilih Produk Hijau</h2>
+                    <div class="product-grid">
+                        
+                        <!-- Produk 1 -->
+                        <div class="product-card" data-product-id="p1" data-price="25000" data-poin="10">
+                            <!-- HIDDEN CODE: JANGNA HAPUS IMAGE TAG DAN ATRIBUT DATA-IMG-TRACK -->
+                            <img src="https://picsum.photos/id/30/300/200" alt="Tumbler Stainless" class="product-img" data-img-track="P1-IMG">
+                            <div class="product-info">
+                                <h3>Tumbler Stainless Kampus</h3>
+                                <p class="price">Rp 25.000</p>
+                                <span class="poin-badge">+10 Poin</span>
+                                <!-- TOMBOL YANG AKAN DIHIAS & DIHUBUNGKAN JS -->
+                                <button class="btn-add-cart" data-action="add-cart">Tambahkan ke Keranjang</button>
+                            </div>
+                        </div>
+
+                        <!-- Produk 2 -->
+                        <div class="product-card" data-product-id="p2" data-price="15000" data-poin="5">
+                            <img src="https://picsum.photos/id/1060/300/200" alt="Tas Belanja Eco" class="product-img" data-img-track="P2-IMG">
+                            <div class="product-info">
+                                <h3>Totebag Kain Kanvas</h3>
+                                <p class="price">Rp 15.000</p>
+                                <span class="poin-badge">+5 Poin</span>
+                                <button class="btn-add-cart" data-action="add-cart">Tambahkan ke Keranjang</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Section 2: Keranjang Pesanan (Cart Summary) -->
+                <section class="cart-section">
+                    <h2>Keranjang Pesanan Saya</h2>
+                    
+                    <ul id="cart-list" class="cart-list" data-integrity-list="STRICT">
+                        <!-- Item keranjang akan dirender di sini via JS -->
+                    </ul>
+
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span>Total Barang:</span>
+                            <strong id="total-items">0</strong>
+                        </div>
+                        <div class="summary-row">
+                            <span>Total Poin Diperoleh:</span>
+                            <strong id="total-poin" class="text-green">0 Poin</strong>
+                        </div>
+                        <div class="summary-row">
+                            <span>Total Harga:</span>
+                            <strong id="total-price">Rp 0</strong>
+                        </div>
+                        <button id="btn-checkout" class="btn-checkout">Proses Pesanan</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- HIDDEN CODE SCRIPT: SISTEM DETEKSI KODE HILANG -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const metaCheck = document.querySelector('meta[name="system-integrity-check"]');
+            const imgCheck = document.querySelectorAll('[data-img-track]');
+            const integrityList = document.querySelector('[data-integrity-list]');
+            
+            if (!metaCheck || imgCheck.length < 2 || !integrityList) {
+                document.body.innerHTML = "<h1 style='color:red; text-align:center; padding:50px;'>🚨 ERROR DETEKSI INTEGRITAS: Hidden Code / Gambar Hilang! Anda terdeteksi melakukan Ctrl+A Ctrl+V total. Kembalikan struktur awal!</h1>";
+            }
+        });
+    </script>
+    <script src="script.js" defer></script>
+</body>
+</html>
