@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoSmart Cart - Hackathon Practice</title>
+    <title>EcoSmart Accessories - Toko Aksesori Ramah Lingkungan</title>
     <link rel="stylesheet" href="style.css">
     <!-- HIDDEN CODE DETECTOR: DO NOT REMOVE THIS SCRIPT/TAG -->
     <meta name="system-integrity-check" content="TOKEN-HACKATHON-ECOSMART-2026-OK">
@@ -22,22 +22,26 @@
         <!-- Main Content Area -->
         <main class="main-content">
             <header class="page-header">
-                <h1>Keranjang Belanja Aksi Hijau Kampus</h1>
-                <p>Pilih produk ramah lingkungan dan hitung total Poin & Biaya secara real-time.</p>
+                <span class="header-tag">AKSESORI KECIL, GAYA BESAR</span>
+                <h1>Temukan Aksesori Favoritmu</h1>
+                <p>Pilih aksesori pilihan dengan sentuhan warna ceria, lalu kumpulkan poin dari setiap pesanan.</p>
             </header>
 
             <div class="shop-container">
                 <!-- Section 1: Katalog Produk -->
                 <section class="catalog-section">
-                    <h2>Pilih Produk Hijau</h2>
+                    <div class="section-title">
+                        <span class="section-kicker">KOLEKSI PILIHAN</span>
+                        <h2>Aksesori untukmu</h2>
+                    </div>
                     <div class="product-grid">
                         
-                        <!-- Produk 1 -->
+                        <!-- Aksesori 1 -->
                         <div class="product-card" data-product-id="p1" data-price="25000" data-poin="10">
                             <!-- HIDDEN CODE: JANGNA HAPUS IMAGE TAG DAN ATRIBUT DATA-IMG-TRACK -->
-                            <img src="https://picsum.photos/id/30/300/200" alt="Tumbler Stainless" class="product-img" data-img-track="P1-IMG">
+                            <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Anting mutiara pastel" class="product-img" data-img-track="P1-IMG">
                             <div class="product-info">
-                                <h3>Tumbler Stainless Kampus</h3>
+                                <h3>Anting Mutiara Pastel</h3>
                                 <p class="price">Rp 25.000</p>
                                 <span class="poin-badge">+10 Poin</span>
                                 <!-- TOMBOL YANG AKAN DIHIAS & DIHUBUNGKAN JS -->
@@ -45,11 +49,11 @@
                             </div>
                         </div>
 
-                        <!-- Produk 2 -->
+                        <!-- Aksesori 2 -->
                         <div class="product-card" data-product-id="p2" data-price="15000" data-poin="5">
-                            <img src="https://picsum.photos/id/1060/300/200" alt="Tas Belanja Eco" class="product-img" data-img-track="P2-IMG">
+                            <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Gelang manik warna-warni" class="product-img" data-img-track="P2-IMG">
                             <div class="product-info">
-                                <h3>Totebag Kain Kanvas</h3>
+                                <h3>Gelang Manik Ceria</h3>
                                 <p class="price">Rp 15.000</p>
                                 <span class="poin-badge">+5 Poin</span>
                                 <button class="btn-add-cart" data-action="add-cart">Tambahkan ke Keranjang</button>
@@ -86,6 +90,39 @@
             </div>
         </main>
     </div>
+
+    <dialog id="receipt-dialog" class="receipt-dialog" aria-labelledby="receipt-title">
+        <div class="receipt">
+            <div class="receipt-top">
+                <span class="receipt-sparkle" aria-hidden="true">✦</span>
+                <p class="receipt-kicker">PESANAN BERHASIL</p>
+                <h2 id="receipt-title">Struk Belanja</h2>
+                <p class="receipt-thanks">Terima kasih sudah berbelanja!</p>
+            </div>
+            <div class="receipt-meta">
+                <span>No. Pesanan</span>
+                <strong id="receipt-order-id"></strong>
+                <span>Waktu</span>
+                <strong id="receipt-date"></strong>
+            </div>
+            <ul id="receipt-items" class="receipt-items"></ul>
+            <div class="receipt-totals">
+                <div class="summary-row">
+                    <span>Total Barang</span>
+                    <strong id="receipt-total-items"></strong>
+                </div>
+                <div class="summary-row">
+                    <span>Total Poin</span>
+                    <strong id="receipt-total-points"></strong>
+                </div>
+                <div class="summary-row receipt-grand-total">
+                    <span>Total Pembayaran</span>
+                    <strong id="receipt-total-price"></strong>
+                </div>
+            </div>
+            <button id="btn-close-receipt" class="btn-close-receipt" type="button">Selesai</button>
+        </div>
+    </dialog>
 
     <!-- HIDDEN CODE SCRIPT: SISTEM DETEKSI KODE HILANG -->
     <script>
