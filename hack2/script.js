@@ -8,11 +8,11 @@ const checkoutButton = document.getElementById("btn-checkout");
 const receiptDialog = document.getElementById("receipt-dialog");
 const receiptItems = document.getElementById("receipt-items");
 const closeReceiptButton = document.getElementById("btn-close-receipt");
+const ONGKIR = 5000;
 
 const formatRupiah = (amount) =>
     `Rp ${amount.toLocaleString("id-ID")}`;
 
-// Render keranjang dan perbarui seluruh nilai ringkasannya.
 function updateCartUI() {
     cartList.replaceChildren();
 
@@ -21,8 +21,9 @@ function updateCartUI() {
         listItem.className = "cart-item";
 
         const itemDescription = document.createElement("span");
+        const subtotal = item.price * item.qty;
         itemDescription.textContent =
-            `${item.name} — ${item.qty} × ${formatRupiah(item.price)}`;
+            `${item.name} — ${item.qty} × ${formatRupiah(item.price)} = ${formatRupiah(subtotal)}`;
 
         const removeButton = document.createElement("button");
         removeButton.type = "button";
@@ -39,74 +40,25 @@ function updateCartUI() {
         (total, item) => total + item.poin * item.qty,
         0
     );
-    const priceTotal = cartData.reduce(
+    const subtotal = cartData.reduce(
         (total, item) => total + item.price * item.qty,
         0
     );
+    const totalPrice = cartData.length === 0 ? 0 : subtotal + ONGKIR;
 
     totalItemsElement.textContent = itemCount;
     totalPointsElement.textContent = `${pointsTotal} Poin`;
-    totalPriceElement.textContent = formatRupiah(priceTotal);
+    totalPriceElement.textContent = formatRupiah(totalPrice);
 }
 
-// Hapus satu produk dari keranjang berdasarkan ID.
 function removeFromCart(id) {
     cartData = cartData.filter((item) => item.id !== id);
     updateCartUI();
 }
 
-// Isi struk dari salinan keranjang sebelum keranjang dikosongkan.
-function showReceipt(items) {
-    receiptItems.replaceChildren();
-
-    items.forEach((item) => {
-        const row = document.createElement("li");
-        row.className = "receipt-item";
-
-        const description = document.createElement("span");
-        description.textContent = `${item.name} × ${item.qty}`;
-
-        const subtotal = document.createElement("span");
-        subtotal.textContent = formatRupiah(item.price * item.qty);
-
-        row.append(description, subtotal);
-        receiptItems.appendChild(row);
-    });
-
-    const itemCount = items.reduce((total, item) => total + item.qty, 0);
-    const pointsTotal = items.reduce(
-        (total, item) => total + item.poin * item.qty,
-        0
-    );
-    const priceTotal = items.reduce(
-        (total, item) => total + item.price * item.qty,
-        0
-    );
-
-    document.getElementById("receipt-order-id").textContent =
-        `ES-${Date.now().toString().slice(-8)}`;
-    document.getElementById("receipt-date").textContent =
-        new Intl.DateTimeFormat("id-ID", {
-            dateStyle: "medium",
-            timeStyle: "short"
-        }).format(new Date());
-    document.getElementById("receipt-total-items").textContent =
-        `${itemCount} item`;
-    document.getElementById("receipt-total-points").textContent =
-        `${pointsTotal} Poin`;
-    document.getElementById("receipt-total-price").textContent =
-        formatRupiah(priceTotal);
-
-    receiptDialog.showModal();
-}
-
-// Delegasi event menangani tombol tambah produk dan hapus item keranjang.
-document.addEventListener("click", (event) => {
-    if (!(event.target instanceof Element)) return;
-
-    const addButton = event.target.closest(".btn-add-cart");
-    if (addButton) {
-        const productCard = addButton.closest(".product-card");
+document.querySelectorAll(".btn-add-cart").forEach((button) => {
+    button.addEventListener("click", () => {
+        const productCard = button.closest(".product-card");
         if (!productCard) return;
 
         const name = productCard.querySelector("h3")?.textContent.trim();
@@ -137,8 +89,11 @@ document.addEventListener("click", (event) => {
         }
 
         updateCartUI();
-        return;
-    }
+    });
+});
+
+cartList.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
 
     const removeButton = event.target.closest(".btn-remove-item");
     if (removeButton) {
@@ -146,18 +101,23 @@ document.addEventListener("click", (event) => {
     }
 });
 
-// Proses pesanan hanya jika keranjang berisi produk.
 checkoutButton.addEventListener("click", () => {
     if (cartData.length === 0) {
-        window.alert("Keranjang masih kosong. Silakan pilih produk terlebih dahulu.");
+        window.alert("Pilih makanan terlebih dahulu!");
         return;
     }
 
-    showReceipt(cartData.map((item) => ({ ...item })));
+    const subtotal = cartData.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+    );
+    const totalPrice = subtotal + ONGKIR;
+
+    window.alert(
+        `Pesanan ShopeeFood berhasil dibuat! Total biaya: ${formatRupiah(totalPrice)}`
+    );
     cartData = [];
     updateCartUI();
 });
 
-closeReceiptButton.addEventListener("click", () => receiptDialog.close());
-
-updateCartUI();
+document.addEventListener("DOMContentLoaded", updateCartUI);

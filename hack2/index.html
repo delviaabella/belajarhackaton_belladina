@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoSmart Accessories - Toko Aksesori Ramah Lingkungan</title>
+    <title>ShopeeFood Eco-Cart Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <!-- HIDDEN CODE DETECTOR: DO NOT REMOVE THIS SCRIPT/TAG -->
     <meta name="system-integrity-check" content="TOKEN-HACKATHON-ECOSMART-2026-OK">
@@ -13,50 +13,56 @@
     <div class="dashboard-grid">
         <!-- Sidebar Navigation -->
         <aside class="sidebar" data-component="sidebar-lock">
-            <div class="logo">🌿 EcoSmart Shop</div>
-            <ul class="nav-menu">
-                <li><a href="#" class="nav-link active">Katalog & Keranjang</a></li>
-            </ul>
+            <div class="logo">🟧 ShopeeFood Eco-Cart</div>
+            <nav aria-label="Navigasi utama">
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active" aria-current="page">Menu Utama</a></li>
+                    <li><a href="#cart-list" class="nav-link">Pesanan Aktif</a></li>
+                    <li><a href="#receipt-dialog" class="nav-link">Riwayat Kuliner</a></li>
+                </ul>
+            </nav>
         </aside>
 
         <!-- Main Content Area -->
         <main class="main-content">
             <header class="page-header">
-                <span class="header-tag">AKSESORI KECIL, GAYA BESAR</span>
-                <h1>Temukan Aksesori Favoritmu</h1>
-                <p>Pilih aksesori pilihan dengan sentuhan warna ceria, lalu kumpulkan poin dari setiap pesanan.</p>
+                <span class="header-tag">PILIHAN KULINER RAMAH LINGKUNGAN</span>
+                <h1>Keranjang Pesanan Kuliner Kampus</h1>
+                <p>Nikmati hidangan favorit kampus dalam kemasan lebih ramah lingkungan, dan kumpulkan Poin Hijau dari setiap pesanan.</p>
             </header>
 
             <div class="shop-container">
                 <!-- Section 1: Katalog Produk -->
                 <section class="catalog-section">
                     <div class="section-title">
-                        <span class="section-kicker">KOLEKSI PILIHAN</span>
-                        <h2>Aksesori untukmu</h2>
+                        <span class="section-kicker">MENU PILIHAN KAMPUS</span>
+                        <h2>Favorit Hari Ini</h2>
                     </div>
                     <div class="product-grid">
                         
-                        <!-- Aksesori 1 -->
+                        <!-- Produk 1 -->
                         <div class="product-card" data-product-id="p1" data-price="25000" data-poin="10">
                             <!-- HIDDEN CODE: JANGNA HAPUS IMAGE TAG DAN ATRIBUT DATA-IMG-TRACK -->
-                            <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Anting mutiara pastel" class="product-img" data-img-track="P1-IMG">
+                            <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Ayam geprek dengan sambal hijau dalam kotak makan" class="product-img" data-img-track="P1-IMG">
                             <div class="product-info">
-                                <h3>Anting Mutiara Pastel</h3>
+                                <h3>Ayam Geprek Sambal Hijau Eco-Box</h3>
+                                <p>Ayam renyah dengan sambal hijau segar, disajikan dalam kemasan Eco-Box.</p>
                                 <p class="price">Rp 25.000</p>
-                                <span class="poin-badge">+10 Poin</span>
+                                <span class="poin-badge">+10 Poin Hijau</span>
                                 <!-- TOMBOL YANG AKAN DIHIAS & DIHUBUNGKAN JS -->
-                                <button class="btn-add-cart" data-action="add-cart">Tambahkan ke Keranjang</button>
+                                <button class="btn-add-cart" data-action="add-cart" type="button">Tambah ke Keranjang</button>
                             </div>
                         </div>
 
-                        <!-- Aksesori 2 -->
+                        <!-- Produk 2 -->
                         <div class="product-card" data-product-id="p2" data-price="15000" data-poin="5">
-                            <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Gelang manik warna-warni" class="product-img" data-img-track="P2-IMG">
+                            <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Es kopi susu dalam gelas tumbler" class="product-img" data-img-track="P2-IMG">
                             <div class="product-info">
-                                <h3>Gelang Manik Ceria</h3>
+                                <h3>Es Kopi Susu Tumbler Kampus</h3>
+                                <p>Es kopi susu creamy dalam tumbler guna ulang, teman belajar di kampus.</p>
                                 <p class="price">Rp 15.000</p>
-                                <span class="poin-badge">+5 Poin</span>
-                                <button class="btn-add-cart" data-action="add-cart">Tambahkan ke Keranjang</button>
+                                <span class="poin-badge">+5 Poin Hijau</span>
+                                <button class="btn-add-cart" data-action="add-cart" type="button">Tambah ke Keranjang</button>
                             </div>
                         </div>
 
@@ -65,26 +71,29 @@
 
                 <!-- Section 2: Keranjang Pesanan (Cart Summary) -->
                 <section class="cart-section">
-                    <h2>Keranjang Pesanan Saya</h2>
+                    <h2>Rincian Pesanan ShopeeFood</h2>
                     
                     <ul id="cart-list" class="cart-list" data-integrity-list="STRICT">
-                        <!-- Item keranjang akan dirender di sini via JS -->
                     </ul>
 
                     <div class="cart-summary">
                         <div class="summary-row">
-                            <span>Total Barang:</span>
+                            <span>Total Item Makanan:</span>
                             <strong id="total-items">0</strong>
                         </div>
                         <div class="summary-row">
-                            <span>Total Poin Diperoleh:</span>
+                            <span>Cashback Poin Hijau:</span>
                             <strong id="total-poin" class="text-green">0 Poin</strong>
                         </div>
                         <div class="summary-row">
-                            <span>Total Harga:</span>
+                            <span>Ongkos Kirim ShopeeFood:</span>
+                            <strong>Rp 5.000</strong>
+                        </div>
+                        <div class="summary-row">
+                            <span>Total Pembayaran:</span>
                             <strong id="total-price">Rp 0</strong>
                         </div>
-                        <button id="btn-checkout" class="btn-checkout">Proses Pesanan</button>
+                        <button id="btn-checkout" class="btn-checkout" type="button">Buat Pesanan ShopeeFood</button>
                     </div>
                 </section>
             </div>
