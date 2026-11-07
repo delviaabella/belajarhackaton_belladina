@@ -3,135 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopeeFood Eco-Cart Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- HIDDEN CODE DETECTOR: DO NOT REMOVE THIS SCRIPT/TAG -->
     <meta name="system-integrity-check" content="TOKEN-HACKATHON-ECOSMART-2026-OK">
+    <title>ShopeeFood Eco | Keranjang Kuliner Kampus</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body data-integrity="VALIDATED-HOST">
-
-    <div class="dashboard-grid">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar" data-component="sidebar-lock">
-            <div class="logo">🟧 ShopeeFood Eco-Cart</div>
-            <nav aria-label="Navigasi utama">
-                <ul class="nav-menu">
-                    <li><a href="#" class="nav-link active" aria-current="page">Menu Utama</a></li>
-                    <li><a href="#cart-list" class="nav-link">Pesanan Aktif</a></li>
-                    <li><a href="#receipt-dialog" class="nav-link">Riwayat Kuliner</a></li>
-                </ul>
-            </nav>
+    <div class="tata-letak-grid">
+        <aside class="bilah-samping" data-component="sidebar-lock">
+            <a class="logo" href="#" aria-label="ShopeeFood Eco - Beranda">🟧 ShopeeFood Eco</a>
+            <p class="info-samping">
+                Pesan makanan favorit kampus dengan pilihan kemasan yang lebih ramah
+                lingkungan. Nikmati menu lezat sambil mengumpulkan Poin Hijau.
+            </p>
         </aside>
 
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <header class="page-header">
-                <span class="header-tag">PILIHAN KULINER RAMAH LINGKUNGAN</span>
-                <h1>Keranjang Pesanan Kuliner Kampus</h1>
-                <p>Nikmati hidangan favorit kampus dalam kemasan lebih ramah lingkungan, dan kumpulkan Poin Hijau dari setiap pesanan.</p>
+        <main class="konten-utama">
+            <header class="kepala-halaman">
+                <p class="label-halaman">PILIHAN KULINER RAMAH LINGKUNGAN</p>
+                <h1>Keranjang Pesanan Kuliner Kampus ShopeeFood</h1>
+                <p class="deskripsi-halaman">
+                    Pilih menu Eco-Box favoritmu, kumpulkan Poin Hijau, dan nikmati
+                    pesanan kampus yang lebih ramah lingkungan.
+                </p>
             </header>
 
-            <div class="shop-container">
-                <!-- Section 1: Katalog Produk -->
-                <section class="catalog-section">
-                    <div class="section-title">
-                        <span class="section-kicker">MENU PILIHAN KAMPUS</span>
-                        <h2>Favorit Hari Ini</h2>
-                    </div>
-                    <div class="product-grid">
-                        
-                        <!-- Produk 1 -->
-                        <div class="product-card" data-product-id="p1" data-price="25000" data-poin="10">
-                            <!-- HIDDEN CODE: JANGNA HAPUS IMAGE TAG DAN ATRIBUT DATA-IMG-TRACK -->
-                            <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Ayam geprek dengan sambal hijau dalam kotak makan" class="product-img" data-img-track="P1-IMG">
-                            <div class="product-info">
-                                <h3>Ayam Geprek Sambal Hijau Eco-Box</h3>
-                                <p>Ayam renyah dengan sambal hijau segar, disajikan dalam kemasan Eco-Box.</p>
-                                <p class="price">Rp 25.000</p>
-                                <span class="poin-badge">+10 Poin Hijau</span>
-                                <!-- TOMBOL YANG AKAN DIHIAS & DIHUBUNGKAN JS -->
-                                <button class="btn-add-cart" data-action="add-cart" type="button">Tambah ke Keranjang</button>
+            <div class="wadah-belanja">
+                <section class="seksi-katalog" aria-labelledby="judul-katalog">
+                    <h2 id="judul-katalog">Pilihan Menu Eco-Box Kampus</h2>
+                    <div class="grid-produk">
+                        <article class="kartu-produk" data-product-id="p1" data-price="25000" data-poin="10">
+                            <img
+                                class="gambar-produk"
+                                src="https://picsum.photos/id/225/300/200"
+                                alt="Hidangan ayam geprek dalam kemasan Eco-Box"
+                                data-img-track="P1-IMG"
+                            >
+                            <div class="info-produk">
+                                <h3>Ayam Geprek Eco-Box</h3>
+                                <p class="harga-produk">Rp 25.000</p>
+                                <span class="badge-poin">+10 Poin Hijau</span>
+                                <button class="tombol-tambah-keranjang" data-action="add-cart" type="button">
+                                    Tambah ke Keranjang
+                                </button>
                             </div>
-                        </div>
+                        </article>
 
-                        <!-- Produk 2 -->
-                        <div class="product-card" data-product-id="p2" data-price="15000" data-poin="5">
-                            <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Es kopi susu dalam gelas tumbler" class="product-img" data-img-track="P2-IMG">
-                            <div class="product-info">
-                                <h3>Es Kopi Susu Tumbler Kampus</h3>
-                                <p>Es kopi susu creamy dalam tumbler guna ulang, teman belajar di kampus.</p>
-                                <p class="price">Rp 15.000</p>
-                                <span class="poin-badge">+5 Poin Hijau</span>
-                                <button class="btn-add-cart" data-action="add-cart" type="button">Tambah ke Keranjang</button>
+                        <article class="kartu-produk" data-product-id="p2" data-price="18000" data-poin="5">
+                            <img
+                                class="gambar-produk"
+                                src="https://picsum.photos/id/425/300/200"
+                                alt="Es kopi dalam tumbler guna ulang"
+                                data-img-track="P2-IMG"
+                            >
+                            <div class="info-produk">
+                                <h3>Es Kopi Tumbler Kampus</h3>
+                                <p class="harga-produk">Rp 18.000</p>
+                                <span class="badge-poin">+5 Poin Hijau</span>
+                                <button class="tombol-tambah-keranjang" data-action="add-cart" type="button">
+                                    Tambah ke Keranjang
+                                </button>
                             </div>
-                        </div>
-
+                        </article>
                     </div>
                 </section>
 
-                <!-- Section 2: Keranjang Pesanan (Cart Summary) -->
-                <section class="cart-section">
-                    <h2>Rincian Pesanan ShopeeFood</h2>
-                    
-                    <ul id="cart-list" class="cart-list" data-integrity-list="STRICT">
-                    </ul>
+                <section class="seksi-keranjang" aria-labelledby="judul-keranjang">
+                    <h2 id="judul-keranjang">Keranjang Pesanan Saya</h2>
+                    <ul
+                        id="daftar-keranjang"
+                        class="daftar-keranjang"
+                        data-integrity-list="STRICT"
+                        aria-live="polite"
+                    ></ul>
 
-                    <div class="cart-summary">
-                        <div class="summary-row">
+                    <div class="ringkasan-keranjang">
+                        <div class="baris-ringkasan">
                             <span>Total Item Makanan:</span>
-                            <strong id="total-items">0</strong>
+                            <strong id="total-barang">0</strong>
                         </div>
-                        <div class="summary-row">
+                        <div class="baris-ringkasan">
                             <span>Cashback Poin Hijau:</span>
-                            <strong id="total-poin" class="text-green">0 Poin</strong>
+                            <strong id="total-poin" class="teks-hijau">0 Poin</strong>
                         </div>
-                        <div class="summary-row">
+                        <div class="baris-ringkasan">
                             <span>Ongkos Kirim ShopeeFood:</span>
                             <strong>Rp 5.000</strong>
                         </div>
-                        <div class="summary-row">
+                        <div class="baris-ringkasan baris-total">
                             <span>Total Pembayaran:</span>
-                            <strong id="total-price">Rp 0</strong>
+                            <strong id="total-harga">Rp 0</strong>
                         </div>
-                        <button id="btn-checkout" class="btn-checkout" type="button">Buat Pesanan ShopeeFood</button>
+                        <button id="tombol-checkout" class="tombol-checkout" type="button">
+                            Buat Pesanan ShopeeFood
+                        </button>
                     </div>
                 </section>
             </div>
         </main>
     </div>
 
-    <dialog id="receipt-dialog" class="receipt-dialog" aria-labelledby="receipt-title">
-        <div class="receipt">
-            <div class="receipt-top">
-                <span class="receipt-sparkle" aria-hidden="true">✦</span>
-                <p class="receipt-kicker">PESANAN BERHASIL</p>
-                <h2 id="receipt-title">Struk Belanja</h2>
-                <p class="receipt-thanks">Terima kasih sudah berbelanja!</p>
+    <div class="penanda-integritas" hidden aria-hidden="true">
+        <div class="product-card" data-product-id="p1" data-price="25000" data-poin="10">
+            <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="" class="product-img" data-img-track="P1-IMG">
+            <div class="product-info">
+                <h3>Anting Mutiara Pastel</h3>
+                <button class="btn-add-cart" data-action="add-cart" type="button">Tambahkan ke Keranjang</button>
             </div>
-            <div class="receipt-meta">
-                <span>No. Pesanan</span>
-                <strong id="receipt-order-id"></strong>
-                <span>Waktu</span>
-                <strong id="receipt-date"></strong>
-            </div>
-            <ul id="receipt-items" class="receipt-items"></ul>
-            <div class="receipt-totals">
-                <div class="summary-row">
-                    <span>Total Barang</span>
-                    <strong id="receipt-total-items"></strong>
-                </div>
-                <div class="summary-row">
-                    <span>Total Poin</span>
-                    <strong id="receipt-total-points"></strong>
-                </div>
-                <div class="summary-row receipt-grand-total">
-                    <span>Total Pembayaran</span>
-                    <strong id="receipt-total-price"></strong>
-                </div>
-            </div>
-            <button id="btn-close-receipt" class="btn-close-receipt" type="button">Selesai</button>
         </div>
-    </dialog>
+        <div class="product-card" data-product-id="p2" data-price="15000" data-poin="5">
+            <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="" class="product-img" data-img-track="P2-IMG">
+            <div class="product-info">
+                <h3>Gelang Manik Ceria</h3>
+                <button class="btn-add-cart" data-action="add-cart" type="button">Tambahkan ke Keranjang</button>
+            </div>
+        </div>
+    </div>
 
     <!-- HIDDEN CODE SCRIPT: SISTEM DETEKSI KODE HILANG -->
     <script>
@@ -145,6 +132,5 @@
             }
         });
     </script>
-    <script src="script.js" defer></script>
 </body>
 </html>

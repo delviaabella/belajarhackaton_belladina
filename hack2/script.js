@@ -1,123 +1,117 @@
-let cartData = [];
+let keranjangData = [];
 
-const cartList = document.getElementById("cart-list");
-const totalItemsElement = document.getElementById("total-items");
-const totalPointsElement = document.getElementById("total-poin");
-const totalPriceElement = document.getElementById("total-price");
-const checkoutButton = document.getElementById("btn-checkout");
-const receiptDialog = document.getElementById("receipt-dialog");
-const receiptItems = document.getElementById("receipt-items");
-const closeReceiptButton = document.getElementById("btn-close-receipt");
+const daftarKeranjang = document.getElementById("daftar-keranjang");
+const totalBarang = document.getElementById("total-barang");
+const totalPoin = document.getElementById("total-poin");
+const totalHarga = document.getElementById("total-harga");
+const tombolCheckout = document.getElementById("tombol-checkout");
 const ONGKIR = 5000;
 
-const formatRupiah = (amount) =>
-    `Rp ${amount.toLocaleString("id-ID")}`;
+const formatRupiah = (jumlah) =>
+    `Rp ${jumlah.toLocaleString("id-ID")}`;
 
-function updateCartUI() {
-    cartList.replaceChildren();
+function perbaruiTampilanKeranjang() {
+    daftarKeranjang.replaceChildren();
 
-    cartData.forEach((item) => {
-        const listItem = document.createElement("li");
-        listItem.className = "cart-item";
+    keranjangData.forEach((item) => {
+        const elemenItem = document.createElement("li");
+        elemenItem.className = "item-keranjang";
 
-        const itemDescription = document.createElement("span");
-        const subtotal = item.price * item.qty;
-        itemDescription.textContent =
-            `${item.name} — ${item.qty} × ${formatRupiah(item.price)} = ${formatRupiah(subtotal)}`;
+        const deskripsiItem = document.createElement("span");
+        deskripsiItem.className = "deskripsi-item-keranjang";
+        const subtotal = item.harga * item.qty;
+        deskripsiItem.textContent =
+            `${item.nama} — ${item.qty} × ${formatRupiah(item.harga)} = ${formatRupiah(subtotal)}`;
 
-        const removeButton = document.createElement("button");
-        removeButton.type = "button";
-        removeButton.className = "btn-remove-item";
-        removeButton.dataset.productId = item.id;
-        removeButton.textContent = "Hapus";
+        const tombolHapus = document.createElement("button");
+        tombolHapus.type = "button";
+        tombolHapus.className = "tombol-hapus-item";
+        tombolHapus.textContent = "Hapus";
+        tombolHapus.setAttribute("aria-label", `Hapus ${item.nama} dari keranjang`);
+        tombolHapus.addEventListener("click", () => hapusItemKeranjang(item.id));
 
-        listItem.append(itemDescription, removeButton);
-        cartList.appendChild(listItem);
+        elemenItem.append(deskripsiItem, tombolHapus);
+        daftarKeranjang.appendChild(elemenItem);
     });
 
-    const itemCount = cartData.reduce((total, item) => total + item.qty, 0);
-    const pointsTotal = cartData.reduce(
-        (total, item) => total + item.poin * item.qty,
+    const jumlahBarang = keranjangData.reduce(
+        (jumlah, item) => jumlah + item.qty,
         0
     );
-    const subtotal = cartData.reduce(
-        (total, item) => total + item.price * item.qty,
+    const jumlahPoin = keranjangData.reduce(
+        (jumlah, item) => jumlah + item.poin * item.qty,
         0
     );
-    const totalPrice = cartData.length === 0 ? 0 : subtotal + ONGKIR;
+    const subtotalPesanan = keranjangData.reduce(
+        (jumlah, item) => jumlah + item.harga * item.qty,
+        0
+    );
+    const jumlahBayar =
+        keranjangData.length === 0 ? 0 : subtotalPesanan + ONGKIR;
 
-    totalItemsElement.textContent = itemCount;
-    totalPointsElement.textContent = `${pointsTotal} Poin`;
-    totalPriceElement.textContent = formatRupiah(totalPrice);
+    totalBarang.textContent = jumlahBarang;
+    totalPoin.textContent = `${jumlahPoin} Poin`;
+    totalHarga.textContent = formatRupiah(jumlahBayar);
 }
 
-function removeFromCart(id) {
-    cartData = cartData.filter((item) => item.id !== id);
-    updateCartUI();
+function hapusItemKeranjang(id) {
+    keranjangData = keranjangData.filter((item) => item.id !== id);
+    perbaruiTampilanKeranjang();
 }
 
-document.querySelectorAll(".btn-add-cart").forEach((button) => {
-    button.addEventListener("click", () => {
-        const productCard = button.closest(".product-card");
-        if (!productCard) return;
+document.querySelectorAll(".tombol-tambah-keranjang").forEach((tombol) => {
+    tombol.addEventListener("click", () => {
+        const kartuProduk = tombol.closest(".kartu-produk");
+        if (!kartuProduk) return;
 
-        const name = productCard.querySelector("h3")?.textContent.trim();
-        const { productId: id, price, poin } = productCard.dataset;
-        const numericPrice = Number(price);
-        const numericPoints = Number(poin);
+        const nama = kartuProduk.querySelector("h3")?.textContent.trim();
+        const { productId: id, price, poin } = kartuProduk.dataset;
+        const harga = Number(price);
+        const jumlahPoin = Number(poin);
 
         if (
-            !name ||
+            !nama ||
             !id ||
-            !Number.isFinite(numericPrice) ||
-            !Number.isFinite(numericPoints)
+            !Number.isFinite(harga) ||
+            !Number.isFinite(jumlahPoin)
         ) {
             return;
         }
 
-        const existingItem = cartData.find((item) => item.id === id);
-        if (existingItem) {
-            existingItem.qty += 1;
+        const itemAda = keranjangData.find((item) => item.id === id);
+        if (itemAda) {
+            itemAda.qty += 1;
         } else {
-            cartData.push({
+            keranjangData.push({
                 id,
-                name,
-                price: numericPrice,
-                poin: numericPoints,
+                nama,
+                harga,
+                poin: jumlahPoin,
                 qty: 1
             });
         }
 
-        updateCartUI();
+        perbaruiTampilanKeranjang();
     });
 });
 
-cartList.addEventListener("click", (event) => {
-    if (!(event.target instanceof Element)) return;
-
-    const removeButton = event.target.closest(".btn-remove-item");
-    if (removeButton) {
-        removeFromCart(removeButton.dataset.productId);
-    }
-});
-
-checkoutButton.addEventListener("click", () => {
-    if (cartData.length === 0) {
-        window.alert("Pilih makanan terlebih dahulu!");
+tombolCheckout.addEventListener("click", () => {
+    if (keranjangData.length === 0) {
+        window.alert("Pilih menu makanan terlebih dahulu!");
         return;
     }
 
-    const subtotal = cartData.reduce(
-        (total, item) => total + item.price * item.qty,
+    const subtotalPesanan = keranjangData.reduce(
+        (jumlah, item) => jumlah + item.harga * item.qty,
         0
     );
-    const totalPrice = subtotal + ONGKIR;
+    const jumlahBayar = subtotalPesanan + ONGKIR;
 
     window.alert(
-        `Pesanan ShopeeFood berhasil dibuat! Total biaya: ${formatRupiah(totalPrice)}`
+        `Pesanan ShopeeFood berhasil dibuat! Total biaya: ${formatRupiah(jumlahBayar)}`
     );
-    cartData = [];
-    updateCartUI();
+    keranjangData = [];
+    perbaruiTampilanKeranjang();
 });
 
-document.addEventListener("DOMContentLoaded", updateCartUI);
+document.addEventListener("DOMContentLoaded", perbaruiTampilanKeranjang);
